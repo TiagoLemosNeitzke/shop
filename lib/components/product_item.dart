@@ -1,29 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:shop/pages/product_detail_page.dart';
+import 'package:shop/utils/app_routes.dart';
 
 import '../models/product.dart';
 
 class ProductItem extends StatelessWidget {
   final Product product;
 
-  ProductItem({
+  const ProductItem({
     required this.product,
   });
 
   @override
   Widget build(BuildContext context) {
     return GridTile(
-      child: GestureDetector(
-        child: Image.network(
-          product.imageUrl,
-          fit: BoxFit.cover,
-        ),
-        onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(builder: (ctx) => ProductDetailPage(product: product))
-          );
-        }
-      ),
       footer: ClipRRect(
         borderRadius: BorderRadius.circular(10),
         child: GridTileBar(
@@ -46,6 +36,18 @@ class ProductItem extends StatelessWidget {
                 color: Theme.of(context).hintColor,
               ),
             )),
+      ),
+      child: GestureDetector(
+        child: Image.network(
+          product.imageUrl,
+          fit: BoxFit.cover,
+        ),
+        onTap: () {
+          Navigator.of(context).pushNamed(
+           AppRoutes.PRODUCT_DETAIL,
+            arguments: product,
+          );
+        }
       ),
     );
   }
